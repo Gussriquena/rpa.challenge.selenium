@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import rpa.challenge.selenium.browser.BrowserConfiguration;
+import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
 
 public class ChallengeController {
@@ -42,14 +43,16 @@ public class ChallengeController {
 	private void insertPersonData(Person person) {
 		try {
 			driver.get("http://www.rpachallenge.com/");
-			sendTextByXpath("//div//label[contains(text(), 'First Name')]//following-sibling::input", person.getFirstName());
-			sendTextByXpath("//div//label[contains(text(), 'Last Name')]//following-sibling::input", person.getLastName());
-			sendTextByXpath("//div//label[contains(text(), 'Role')]//following-sibling::input", person.getRoleInCompany());
-			sendTextByXpath("//div//label[contains(text(), 'Company Name')]//following-sibling::input", person.getCompanyName());
-			sendTextByXpath("//div//label[contains(text(), 'Address')]//following-sibling::input", person.getAddress());
-			sendTextByXpath("//div//label[contains(text(), 'Email')]//following-sibling::input", person.getEmail());
-			sendTextByXpath("//div//label[contains(text(), 'Phone')]//following-sibling::input", person.getPhoneNumber().toString());
-			driver.findElement(By.xpath("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]")).click();
+			
+			sendTextByXpath("First Name", person.getFirstName());
+			sendTextByXpath("Last Name", person.getLastName());
+			sendTextByXpath("Role", person.getRoleInCompany());
+			sendTextByXpath("Company Name", person.getCompanyName());
+			sendTextByXpath("Address", person.getAddress());
+			sendTextByXpath("Email", person.getEmail());
+			sendTextByXpath("Phone", person.getPhoneNumber().toString());
+			
+			driver.findElement(By.xpath(PageEnum.XPATH_BUTTON_SUBMIT.getValue())).click();
 
 			log.info("Data inserted with success");
 		} catch (Exception e) {
@@ -57,8 +60,8 @@ public class ChallengeController {
 		}
 	}
 
-	private void sendTextByXpath(String xpath, String typeData) {
-		driver.findElement(By.xpath(xpath)).sendKeys(typeData);
+	private void sendTextByXpath(String xpathInputParam, String typeData) {
+		driver.findElement(By.xpath(String.format(PageEnum.XPATH_INPUT_DEFAULT.getValue(), xpathInputParam))).sendKeys(typeData);
 	}
 	
 	private void closeWebDriver() {

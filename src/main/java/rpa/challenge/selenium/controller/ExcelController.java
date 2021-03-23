@@ -18,6 +18,7 @@ public class ExcelController {
 	private static Logger log = Logger.getLogger(ExcelController.class);
 	
 	public List<Person> readRowsExcel(){
+		log.info("Reading excel rows");
 		List<Person> personList = new ArrayList<>();
 		
 		File inputFile = new File(findExcel());
@@ -38,10 +39,9 @@ public class ExcelController {
 					person.setRoleInCompany(row.getCell(3).getStringCellValue());
 					person.setAddress(row.getCell(4).getStringCellValue());
 					person.setEmail(row.getCell(5).getStringCellValue());
-					//person.setPhoneNumber(row.getCell(6).toString());
-					
-					log.info(person);
+					//person.setPhoneNumber(row.getCell(6).getNumericCellValue());
 
+					log.info(person);
 					personList.add(person);
 				} else if(firstCell.equals("")) {
 					break;
@@ -50,6 +50,7 @@ public class ExcelController {
 			
 			fileWorkbook.close();
 			
+			log.info("Rows loaded with success!");
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -68,6 +69,8 @@ public class ExcelController {
 					filePath = filePath + file;
 				}
 			}
+			
+			//Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

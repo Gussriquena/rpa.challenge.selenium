@@ -70,10 +70,9 @@ public class ExcelController {
 			for (String file : files) {
 				if (file.contains(".xlsx")) {
 					filePath = filePath + file;
+					Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
-			
-			Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

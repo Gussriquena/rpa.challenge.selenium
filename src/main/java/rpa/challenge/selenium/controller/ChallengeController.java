@@ -34,8 +34,10 @@ public class ChallengeController {
 					driver.findElement(By.xpath("//div//label[contains(text(), 'Email')]//following-sibling::input")).sendKeys(person.getEmail());
 					driver.findElement(By.xpath("//div//label[contains(text(), 'Phone')]//following-sibling::input")).sendKeys(person.getPhoneNumber().toString());
 					driver.findElement(By.xpath("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]")).click();
+					
+					log.info("Data inserted with success");
 				} catch (Exception e) {
-					log.error(e.getMessage());
+					log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
 				}
 			}
 			

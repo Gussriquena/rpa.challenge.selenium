@@ -2,6 +2,9 @@ package rpa.challenge.selenium.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,12 +73,12 @@ public class ExcelController {
 				}
 			}
 			
-			//Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
+			Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		
-		return filePath;
+		return "c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx";
 	}
 	
 }

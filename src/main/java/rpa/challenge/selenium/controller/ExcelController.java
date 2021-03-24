@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -42,7 +44,7 @@ public class ExcelController {
 					person.setRoleInCompany(row.getCell(3).getStringCellValue());
 					person.setAddress(row.getCell(4).getStringCellValue());
 					person.setEmail(row.getCell(5).getStringCellValue());
-					//person.setPhoneNumber(row.getCell(6).getNumericCellValue());
+					person.setPhoneNumber(String.valueOf((long) row.getCell(6).getNumericCellValue()));
 
 					log.info(person);
 					personList.add(person);

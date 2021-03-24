@@ -8,14 +8,14 @@ public class Person {
 	private String roleInCompany;
 	private String address;
 	private String email;
-	private Double phoneNumber;
+	private String phoneNumber;
 	
 	public Person() {
 		
 	}
 
 	public Person(String firstName, String lastName, String companyName, String roleInCompany, String address,
-			String email, Double phoneNumber) {
+			String email, String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.companyName = companyName;
@@ -73,11 +73,11 @@ public class Person {
 		this.email = email;
 	}
 
-	public Double getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Double phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

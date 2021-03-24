@@ -32,18 +32,18 @@ public class ChallengeController {
 
 	private void processData(List<Person> personList) {
 		driver = new ChromeDriver(BrowserConfiguration.getChromeOptios());
-		
+
 		for (Person person : personList) {
 			insertPersonData(person);
 		}
-		
+
 		closeWebDriver();
 	}
 
 	private void insertPersonData(Person person) {
 		try {
 			driver.get("http://www.rpachallenge.com/");
-			
+
 			sendTextByXpath("First Name", person.getFirstName());
 			sendTextByXpath("Last Name", person.getLastName());
 			sendTextByXpath("Role", person.getRoleInCompany());
@@ -51,7 +51,7 @@ public class ChallengeController {
 			sendTextByXpath("Address", person.getAddress());
 			sendTextByXpath("Email", person.getEmail());
 			sendTextByXpath("Phone", person.getPhoneNumber().toString());
-			
+
 			driver.findElement(By.xpath(PageEnum.XPATH_BUTTON_SUBMIT.getValue())).click();
 
 			log.info("Data inserted with success");
@@ -61,9 +61,10 @@ public class ChallengeController {
 	}
 
 	private void sendTextByXpath(String xpathInputParam, String typeData) {
-		driver.findElement(By.xpath(String.format(PageEnum.XPATH_INPUT_DEFAULT.getValue(), xpathInputParam))).sendKeys(typeData);
+		driver.findElement(By.xpath(String.format(PageEnum.XPATH_INPUT_DEFAULT.getValue(), xpathInputParam)))
+				.sendKeys(typeData);
 	}
-	
+
 	private void closeWebDriver() {
 		// Close the browser window that the driver has focus of
 		driver.close();

@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import rpa.challenge.selenium.browser.WebDriverFactory;
 import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
+import rpa.challenge.selenium.util.PageUtils;
 
 public class ChallengeController {
 
@@ -44,26 +45,23 @@ public class ChallengeController {
 	private void insertPersonData(Person person) {
 		try {
 			driver.get("http://www.rpachallenge.com/");
+			
+			PageUtils pageUtils = new PageUtils(driver);
 
-			sendTextByXpath("First Name", person.getFirstName());
-			sendTextByXpath("Last Name", person.getLastName());
-			sendTextByXpath("Role", person.getRoleInCompany());
-			sendTextByXpath("Company Name", person.getCompanyName());
-			sendTextByXpath("Address", person.getAddress());
-			sendTextByXpath("Email", person.getEmail());
-			sendTextByXpath("Phone", person.getPhoneNumber().toString());
+			pageUtils.sendTextByXpath("First Name", person.getFirstName());
+			pageUtils.sendTextByXpath("Last Name", person.getLastName());
+			pageUtils.sendTextByXpath("Role", person.getRoleInCompany());
+			pageUtils.sendTextByXpath("Company Name", person.getCompanyName());
+			pageUtils.sendTextByXpath("Address", person.getAddress());
+			pageUtils.sendTextByXpath("Email", person.getEmail());
+			pageUtils.sendTextByXpath("Phone", person.getPhoneNumber().toString());
 
-			driver.findElement(By.xpath(PageEnum.XPATH_BUTTON_SUBMIT.getValue())).click();
+			pageUtils.clickByXpath(PageEnum.XPATH_BUTTON_SUBMIT.getValue());
 
 			log.info("Data inserted with success");
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
 		}
-	}
-
-	private void sendTextByXpath(String xpathInputParam, String typeData) {
-		driver.findElement(By.xpath(String.format(PageEnum.XPATH_INPUT_DEFAULT.getValue(), xpathInputParam)))
-				.sendKeys(typeData);
 	}
 
 }

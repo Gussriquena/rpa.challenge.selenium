@@ -6,9 +6,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import rpa.challenge.selenium.browser.BrowserConfiguration;
+import rpa.challenge.selenium.browser.WebDriverFactory;
 import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
 
@@ -28,16 +27,18 @@ public class ChallengeController {
 		} else {
 			log.info("No registers found to input");
 		}
+		
+		log.info("Data sent with success");
 	}
 
 	private void processData(List<Person> personList) {
-		driver = new ChromeDriver(BrowserConfiguration.getChromeOptios());
-
+		driver = WebDriverFactory.getInstance();
+		
 		for (Person person : personList) {
 			insertPersonData(person);
 		}
 
-		closeWebDriver();
+		WebDriverFactory.closeWebDriver();
 	}
 
 	private void insertPersonData(Person person) {
@@ -65,10 +66,4 @@ public class ChallengeController {
 				.sendKeys(typeData);
 	}
 
-	private void closeWebDriver() {
-		// Close the browser window that the driver has focus of
-		driver.close();
-		// Closes all browser windows and safely ends the session (kills chromedriver)
-		driver.quit();
-	}
 }

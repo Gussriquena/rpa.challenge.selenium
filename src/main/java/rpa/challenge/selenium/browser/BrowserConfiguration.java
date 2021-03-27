@@ -33,6 +33,7 @@ public class BrowserConfiguration {
 		options.addArguments("--disable-default-apps");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--disable-gpu");
+		options.addArguments("--disable-infobars");
 
 		options.setExperimentalOption("prefs", chromePreferences);
 		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);

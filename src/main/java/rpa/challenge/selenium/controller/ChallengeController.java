@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import rpa.challenge.selenium.browser.WebDriverFactory;
@@ -45,7 +44,6 @@ public class ChallengeController {
 	private void insertPersonData(Person person) {
 		try {
 			driver.get("http://www.rpachallenge.com/");
-			
 			PageUtils pageUtils = new PageUtils(driver);
 
 			pageUtils.sendTextByXpath("First Name", person.getFirstName());
@@ -63,5 +61,4 @@ public class ChallengeController {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
 		}
 	}
-
 }

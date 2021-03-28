@@ -1,6 +1,13 @@
 package rpa.challenge.selenium.constants;
 
+import rpa.challenge.selenium.util.ConfigReader;
+
 public enum PageEnum {
+	
+	URL_CHALLENGE(ConfigReader.read("url.challenge.main")),
+	
+	PATH_EXCEL_INPUT(ConfigReader.read("path.excel.input")),
+	PATH_EXCEL_OUTPU(ConfigReader.read("path.excel.output")),
 	
 	XPATH_INPUT_DEFAULT("//div//label[contains(text(), '%s')]//following-sibling::input"),
 	XPATH_BUTTON_SUBMIT("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]");

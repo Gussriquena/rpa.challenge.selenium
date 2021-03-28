@@ -43,7 +43,7 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			driver.get("http://www.rpachallenge.com/");
+			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			PageUtils pageUtils = new PageUtils(driver);
 
 			pageUtils.sendTextByXpath("First Name", person.getFirstName());

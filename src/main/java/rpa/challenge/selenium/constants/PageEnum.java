@@ -8,6 +8,7 @@ public enum PageEnum {
 	
 	PATH_EXCEL_INPUT(ConfigReader.read("path.excel.input")),
 	PATH_EXCEL_OUTPU(ConfigReader.read("path.excel.output")),
+	PATH_EXCEL_PROCESSING(ConfigReader.read("path.excel.processing")),
 	
 	XPATH_INPUT_DEFAULT("//div//label[contains(text(), '%s')]//following-sibling::input"),
 	XPATH_BUTTON_SUBMIT("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]");

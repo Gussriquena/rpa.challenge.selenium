@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
 
 public class ExcelController {
@@ -62,22 +63,28 @@ public class ExcelController {
 	}
 	
 	private String findExcel() {
-		String filePath = "c:\\Arquivos\\rpa.challenge\\";
+		String filePath = PageEnum.PATH_EXCEL_INPUT.getValue();
+		String filePathProcessing = PageEnum.PATH_EXCEL_PROCESSING.getValue() + "challenge.xlsx";
 		
 		try {
+			if (Files.exists(Paths.get(filePath))) {
+				new File(filePath).mkdirs();
+				new File(filePathProcessing).mkdirs();
+			}
+			
 			File filesInput = new File(filePath);
 			String[] files = filesInput.list();
 			for (String file : files) {
 				if (file.contains(".xlsx")) {
 					filePath = filePath + file;
-					Files.move(Paths.get(filePath), Paths.get("c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx"), StandardCopyOption.REPLACE_EXISTING);
+					Files.move(Paths.get(filePath), Paths.get(filePathProcessing), StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		
-		return "c:\\Arquivos\\rpa.challenge\\processando\\challenge.xlsx";
+		return filePathProcessing;
 	}
 	
 }

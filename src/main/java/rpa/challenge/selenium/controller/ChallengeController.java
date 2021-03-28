@@ -33,6 +33,7 @@ public class ChallengeController {
 
 	private void processData(List<Person> personList) {
 		driver = WebDriverFactory.getInstance();
+		driver.get(PageEnum.URL_CHALLENGE.getValue());
 		
 		for (Person person : personList) {
 			insertPersonData(person);
@@ -43,7 +44,6 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			PageUtils pageUtils = new PageUtils(driver);
 
 			pageUtils.sendTextByXpath("First Name", person.getFirstName());
@@ -59,6 +59,7 @@ public class ChallengeController {
 			log.info("Data inserted with success");
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
+			driver.get(PageEnum.URL_CHALLENGE.getValue());
 		}
 	}
 }

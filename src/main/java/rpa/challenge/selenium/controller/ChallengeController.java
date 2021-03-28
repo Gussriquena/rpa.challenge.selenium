@@ -28,7 +28,7 @@ public class ChallengeController {
 			log.info("No registers found to input");
 		}
 		
-		log.info("Data sent with success");
+		log.info("Process ended");
 	}
 
 	private void processData(List<Person> personList) {

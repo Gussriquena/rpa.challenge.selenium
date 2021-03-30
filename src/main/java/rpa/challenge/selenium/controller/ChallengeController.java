@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import rpa.challenge.selenium.browser.WebDriverFactory;
 import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
-import rpa.challenge.selenium.util.PageUtils;
+import rpa.challenge.selenium.pages.ChallengePage;
 
 public class ChallengeController {
 
@@ -44,17 +44,16 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			PageUtils pageUtils = new PageUtils(driver);
+			ChallengePage challengePage = new ChallengePage(driver);
 
-			pageUtils.sendTextByXpath("First Name", person.getFirstName());
-			pageUtils.sendTextByXpath("Last Name", person.getLastName());
-			pageUtils.sendTextByXpath("Role", person.getRoleInCompany());
-			pageUtils.sendTextByXpath("Company Name", person.getCompanyName());
-			pageUtils.sendTextByXpath("Address", person.getAddress());
-			pageUtils.sendTextByXpath("Email", person.getEmail());
-			pageUtils.sendTextByXpath("Phone", person.getPhoneNumber().toString());
-
-			pageUtils.clickByXpath(PageEnum.XPATH_BUTTON_SUBMIT.getValue());
+			challengePage.fillInputText("First Name", person.getFirstName());
+			challengePage.fillInputText("Last Name", person.getLastName());
+			challengePage.fillInputText("Role", person.getRoleInCompany());
+			challengePage.fillInputText("Company Name", person.getCompanyName());
+			challengePage.fillInputText("Address", person.getAddress());
+			challengePage.fillInputText("Email", person.getEmail());
+			challengePage.fillInputText("Phone", person.getPhoneNumber().toString());
+			challengePage.clickSubmitButton();
 
 			log.info("Data inserted with success");
 		} catch (Exception e) {

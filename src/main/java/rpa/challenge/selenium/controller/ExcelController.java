@@ -2,6 +2,7 @@ package rpa.challenge.selenium.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -20,6 +21,9 @@ import rpa.challenge.selenium.model.Person;
 public class ExcelController {
 	
 	private static Logger log = Logger.getLogger(ExcelController.class);
+	private String outputFileName = "challenge.xlsx";
+	private String outputFilePath = PageEnum.PATH_EXCEL_OUTPUT.getValue() + outputFileName;
+	private String processingPath = PageEnum.PATH_EXCEL_PROCESSING.getValue() + outputFileName;
 	
 	public List<Person> readRowsExcel(){
 		log.info("Reading excel rows");
@@ -62,14 +66,43 @@ public class ExcelController {
 		return personList;
 	}
 	
+	public void writeOutputFile(List<Person> persons) {
+		try (FileInputStream fileInputStream = new FileInputStream(processingPath)){
+			XSSFWorkbook fileWorkbook = new XSSFWorkbook(fileInputStream);
+			Sheet sheet = fileWorkbook.getSheetAt(0);
+			
+			int rowNumber = 1;
+			for (Person person : persons) {
+				Row row = sheet.createRow(rowNumber++);
+				
+				row.createCell(0).setCellValue(person.getFirstName());
+				row.createCell(1).setCellValue(person.getLastName());
+				row.createCell(2).setCellValue(person.getCompanyName());
+				row.createCell(3).setCellValue(person.getRoleInCompany());
+				row.createCell(4).setCellValue(person.getAddress());
+				row.createCell(5).setCellValue(person.getEmail());
+				row.createCell(6).setCellValue(person.getPhoneNumber());
+				row.createCell(7).setCellValue(person.isSuccessProcessed());
+			}
+			
+			FileOutputStream fileOutputStream = new FileOutputStream(processingPath);
+			fileWorkbook.write(fileOutputStream);
+			fileWorkbook.close();
+			
+			Files.move(Paths.get(processingPath), Paths.get(outputFilePath), StandardCopyOption.REPLACE_EXISTING);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+	}
+	
 	private String findExcel() {
 		String filePath = PageEnum.PATH_EXCEL_INPUT.getValue();
-		String filePathProcessing = PageEnum.PATH_EXCEL_PROCESSING.getValue() + "challenge.xlsx";
 		
 		try {
 			if (Files.exists(Paths.get(filePath))) {
 				new File(filePath).mkdirs();
-				new File(filePathProcessing).mkdirs();
+				new File(processingPath).mkdirs();
+				new File(outputFilePath).mkdirs();
 			}
 			
 			File filesInput = new File(filePath);
@@ -77,14 +110,14 @@ public class ExcelController {
 			for (String file : files) {
 				if (file.contains(".xlsx")) {
 					filePath = filePath + file;
-					Files.move(Paths.get(filePath), Paths.get(filePathProcessing), StandardCopyOption.REPLACE_EXISTING);
+					Files.move(Paths.get(filePath), Paths.get(processingPath), StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		
-		return filePathProcessing;
+		return processingPath;
 	}
 	
 }

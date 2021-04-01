@@ -24,6 +24,7 @@ public class ChallengeController {
 
 		if (!personList.isEmpty()) {
 			processData(personList);
+			excelController.writeOutputFile(personList);
 		} else {
 			log.info("No registers found to input");
 		}
@@ -55,6 +56,7 @@ public class ChallengeController {
 			challengePage.fillInputText("Phone", person.getPhoneNumber().toString());
 			challengePage.clickSubmitButton();
 
+			person.setSuccessProcessed(true);
 			log.info("Data inserted with success");
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());

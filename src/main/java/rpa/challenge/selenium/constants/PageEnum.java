@@ -7,7 +7,7 @@ public enum PageEnum {
 	URL_CHALLENGE(ConfigReader.read("url.challenge.main")),
 	
 	PATH_EXCEL_INPUT(ConfigReader.read("path.excel.input")),
-	PATH_EXCEL_OUTPU(ConfigReader.read("path.excel.output")),
+	PATH_EXCEL_OUTPUT(ConfigReader.read("path.excel.output")),
 	PATH_EXCEL_PROCESSING(ConfigReader.read("path.excel.processing")),
 	
 	XPATH_INPUT_DEFAULT("//div//label[contains(text(), '%s')]//following-sibling::input"),

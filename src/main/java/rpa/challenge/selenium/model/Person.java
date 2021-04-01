@@ -9,13 +9,14 @@ public class Person {
 	private String address;
 	private String email;
 	private String phoneNumber;
+	private boolean successProcessed;
 	
 	public Person() {
 		
 	}
 
 	public Person(String firstName, String lastName, String companyName, String roleInCompany, String address,
-			String email, String phoneNumber) {
+			String email, String phoneNumber, boolean successProcessed) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.companyName = companyName;
@@ -23,6 +24,7 @@ public class Person {
 		this.address = address;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.successProcessed = successProcessed;
 	}
 
 	public String getFirstName() {
@@ -80,12 +82,22 @@ public class Person {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public boolean isSuccessProcessed() {
+		return successProcessed;
+	}
+
+	public void setSuccessProcessed(boolean successProcessed) {
+		this.successProcessed = successProcessed;
+	}
 
 	@Override
 	public String toString() {
 		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", companyName=" + companyName
 				+ ", roleInCompany=" + roleInCompany + ", address=" + address + ", email=" + email + ", phoneNumber="
-				+ phoneNumber + "]";
+				+ phoneNumber + ", successProcessed=" + successProcessed + "]";
 	}
+
+
 	
 }

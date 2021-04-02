@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import rpa.challenge.selenium.browser.WebDriverFactory;
 import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.model.Person;
-import rpa.challenge.selenium.pages.ChallengePage;
+import rpa.challenge.selenium.pages.ChallengePageJs;
 
 public class ChallengeController {
 
@@ -36,14 +36,15 @@ public class ChallengeController {
 			driver = WebDriverFactory.getInstance();
 			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			
-			ChallengePage challengePage = new ChallengePage(driver);
-			challengePage.clickStartButton();
+			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
+			challengePageJs.clickStartButton();
 			
 			for (Person person : personList) {
 				insertPersonData(person);
 			}
 
-			resultMessage = challengePage.getResultMessage();
+			resultMessage = challengePageJs.getResultMessage();
+			log.info(resultMessage);
 			WebDriverFactory.closeWebDriver();
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -54,19 +55,18 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			ChallengePage challengePage = new ChallengePage(driver);
+			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
 
-			challengePage.fillInputText("First Name", person.getFirstName());
-			challengePage.fillInputText("Last Name", person.getLastName());
-			challengePage.fillInputText("Role", person.getRoleInCompany());
-			challengePage.fillInputText("Company Name", person.getCompanyName());
-			challengePage.fillInputText("Address", person.getAddress());
-			challengePage.fillInputText("Email", person.getEmail());
-			challengePage.fillInputText("Phone", person.getPhoneNumber().toString());
-			challengePage.clickSubmitButton();
+			challengePageJs.fillInputText("First Name", person.getFirstName());
+			challengePageJs.fillInputText("Last Name", person.getLastName());
+			challengePageJs.fillInputText("Role", person.getRoleInCompany());
+			challengePageJs.fillInputText("Company Name", person.getCompanyName());
+			challengePageJs.fillInputText("Address", person.getAddress());
+			challengePageJs.fillInputText("Email", person.getEmail());
+			challengePageJs.fillInputText("Phone", person.getPhoneNumber().toString());
+			challengePageJs.clickSubmitButton();
 
 			person.setSuccessProcessed(true);
-			log.info("Data inserted with success");
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
 			driver.get(PageEnum.URL_CHALLENGE.getValue());

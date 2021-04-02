@@ -16,6 +16,8 @@ public class Main {
 		
 		ChallengeController challengeController = new ChallengeController();
 		challengeController.initFlow();
+		
+		log.info("Process ended");
 	}
 
 }

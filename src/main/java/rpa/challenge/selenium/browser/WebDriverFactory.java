@@ -2,18 +2,25 @@ package rpa.challenge.selenium.browser;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class WebDriverFactory {
 
+public class WebDriverFactory {
+	private static Logger log = Logger.getLogger(WebDriverFactory.class);
 	private static WebDriver driver = null;
 	
 	public static WebDriver getInstance() {
-		driver = new ChromeDriver(BrowserConfiguration.getChromeOptios());
-		driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		try {
+			driver = new ChromeDriver(BrowserConfiguration.getChromeOptios());
+			driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		} catch(Exception e) {
+			log.error(e.getMessage());
+		}
+		
 		return driver;
 	}
 	

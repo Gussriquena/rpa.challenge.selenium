@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class BrowserConfiguration {
 
-	public static ChromeOptions getChromeOptios() {
+	public static ChromeOptions getChromeOptios() throws Exception {
 		HashMap<String, Object> chromePreferences = new HashMap<String, Object>();
 		ChromeOptions options = new ChromeOptions();
 

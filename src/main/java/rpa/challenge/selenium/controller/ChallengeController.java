@@ -19,28 +19,37 @@ public class ChallengeController {
 
 	public void initFlow() {
 		ExcelController excelController = new ExcelController();
-
 		personList = excelController.readRowsExcel();
 
 		if (!personList.isEmpty()) {
-			processData(personList);
+			excelController.setResultMessage(processData(personList));
 			excelController.writeOutputFile(personList);
 		} else {
 			log.info("No registers found to input");
 		}
-		
-		log.info("Process ended");
 	}
 
-	private void processData(List<Person> personList) {
-		driver = WebDriverFactory.getInstance();
-		driver.get(PageEnum.URL_CHALLENGE.getValue());
+	private String processData(List<Person> personList) {
+		String resultMessage = "";
 		
-		for (Person person : personList) {
-			insertPersonData(person);
-		}
+		try {
+			driver = WebDriverFactory.getInstance();
+			driver.get(PageEnum.URL_CHALLENGE.getValue());
+			
+			ChallengePage challengePage = new ChallengePage(driver);
+			challengePage.clickStartButton();
+			
+			for (Person person : personList) {
+				insertPersonData(person);
+			}
 
-		WebDriverFactory.closeWebDriver();
+			resultMessage = challengePage.getResultMessage();
+			WebDriverFactory.closeWebDriver();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		
+		return resultMessage;
 	}
 
 	private void insertPersonData(Person person) {

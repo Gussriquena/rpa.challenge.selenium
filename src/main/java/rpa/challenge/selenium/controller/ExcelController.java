@@ -24,6 +24,7 @@ public class ExcelController {
 	private String outputFileName = "challenge.xlsx";
 	private String outputFilePath = PageEnum.PATH_EXCEL_OUTPUT.getValue() + outputFileName;
 	private String processingPath = PageEnum.PATH_EXCEL_PROCESSING.getValue() + outputFileName;
+	private String resultMessage;
 	
 	public List<Person> readRowsExcel(){
 		log.info("Reading excel rows");
@@ -67,7 +68,8 @@ public class ExcelController {
 	}
 	
 	public void writeOutputFile(List<Person> persons) {
-		try (FileInputStream fileInputStream = new FileInputStream(processingPath)){
+		try {
+			FileInputStream fileInputStream = new FileInputStream(processingPath);
 			XSSFWorkbook fileWorkbook = new XSSFWorkbook(fileInputStream);
 			Sheet sheet = fileWorkbook.getSheetAt(0);
 			
@@ -84,15 +86,20 @@ public class ExcelController {
 				row.createCell(6).setCellValue(person.getPhoneNumber());
 				row.createCell(7).setCellValue(person.isSuccessProcessed());
 			}
+
+			sheet.createRow(rowNumber).createCell(0).setCellValue(resultMessage);
 			
 			FileOutputStream fileOutputStream = new FileOutputStream(processingPath);
 			fileWorkbook.write(fileOutputStream);
 			fileWorkbook.close();
+			fileInputStream.close();
+			fileOutputStream.close();
 			
 			Files.move(Paths.get(processingPath), Paths.get(outputFilePath), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+		
 	}
 	
 	private String findExcel() {
@@ -118,6 +125,10 @@ public class ExcelController {
 		}
 		
 		return processingPath;
+	}
+
+	public void setResultMessage(String resultMessage) {
+		this.resultMessage = resultMessage;
 	}
 	
 }

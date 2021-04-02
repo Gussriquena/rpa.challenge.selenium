@@ -11,7 +11,9 @@ public enum PageEnum {
 	PATH_EXCEL_PROCESSING(ConfigReader.read("path.excel.processing")),
 	
 	XPATH_INPUT_DEFAULT("//div//label[contains(text(), '%s')]//following-sibling::input"),
-	XPATH_BUTTON_SUBMIT("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]");
+	XPATH_BUTTON_SUBMIT("//form//input[@Type='submit' or contains(text(), 'submit') or starts-with(@class, 'btn')]"),
+	XPATH_BUTTON_START("//div/button[contains(text(), 'Start')]"),
+	XPATH_RESULT_MESSAGE("//div/div[@class='message2']");
 
 	private String value;
 	

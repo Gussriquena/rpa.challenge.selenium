@@ -97,7 +97,4 @@ public class Person {
 				+ ", roleInCompany=" + roleInCompany + ", address=" + address + ", email=" + email + ", phoneNumber="
 				+ phoneNumber + ", successProcessed=" + successProcessed + "]";
 	}
-
-
-	
 }

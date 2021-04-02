@@ -65,8 +65,7 @@ public class ChallengeController {
 			challengePageJs.fillInputText("Email", person.getEmail());
 			challengePageJs.fillInputText("Phone", person.getPhoneNumber().toString());
 			challengePageJs.clickSubmitButton();
-
-			person.setSuccessProcessed(true);
+			
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
 			driver.get(PageEnum.URL_CHALLENGE.getValue());

@@ -16,7 +16,7 @@ public class ChallengeController {
 	private Logger log = Logger.getLogger(ChallengeController.class);
 	private WebDriver driver;
 	private List<Person> personList = new ArrayList<>();
-
+	
 	public void initFlow() {
 		ExcelController excelController = new ExcelController();
 		personList = excelController.readRowsExcel();
@@ -38,7 +38,7 @@ public class ChallengeController {
 			
 			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
 			challengePageJs.clickStartButton();
-			
+		
 			for (Person person : personList) {
 				insertPersonData(person);
 			}
@@ -67,7 +67,7 @@ public class ChallengeController {
 			challengePageJs.clickSubmitButton();
 			
 		} catch (Exception e) {
-			log.error("Was not possible insert data to person: " + person.getFirstName() + " - " + e.getMessage());
+			log.error("Was not possible insert data to person: " + e.getMessage()  + " - " + person.toString());
 			driver.get(PageEnum.URL_CHALLENGE.getValue());
 		}
 	}

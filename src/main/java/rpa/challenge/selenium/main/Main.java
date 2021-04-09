@@ -3,6 +3,7 @@ package rpa.challenge.selenium.main;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import rpa.challenge.selenium.constants.PageEnum;
 import rpa.challenge.selenium.controller.ChallengeController;
 
 public class Main {
@@ -10,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("resources\\log4j.properties");
-		System.setProperty("webdriver.chrome.driver", "resources\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", PageEnum.PATH_CHROME_DRIVER.getValue());
 		
 		log.info("Starting RPA Challenge automation");
 		

@@ -21,7 +21,9 @@ import rpa.challenge.selenium.model.Person;
 public class ExcelController {
 	
 	private static Logger log = Logger.getLogger(ExcelController.class);
-	private String outputFileName = "challenge.xlsx";
+	
+	// colocar no properties
+	private String outputFileName = PageEnum.NAME_EXCEL_FILE.getValue();
 	private String outputFilePath = PageEnum.PATH_EXCEL_OUTPUT.getValue() + outputFileName;
 	private String processingPath = PageEnum.PATH_EXCEL_PROCESSING.getValue() + outputFileName;
 	private String resultMessage;
@@ -41,6 +43,11 @@ public class ExcelController {
 				Row row = rowIterator.next();
 				
 				String firstCell = row.getCell(0).getStringCellValue();
+				
+				// comparar estático primeiro
+				// "".equals(firstCell)
+				// se firstcell = null estoura exceção
+				// se comparar estático primeiro não estoura exception
 				if (!firstCell.equals("") && !firstCell.contains("First")) {
 					person.setFirstName(firstCell);
 					person.setLastName(row.getCell(1).getStringCellValue());
@@ -50,7 +57,7 @@ public class ExcelController {
 					person.setEmail(row.getCell(5).getStringCellValue());
 					person.setPhoneNumber(String.valueOf((long) row.getCell(6).getNumericCellValue()));
 
-					log.info(person);
+					log.debug(person);
 					personList.add(person);
 				} else if(firstCell.equals("")) {
 					break;
@@ -112,6 +119,7 @@ public class ExcelController {
 				new File(outputFilePath).mkdirs();
 			}
 			
+			// verificar tratamento para arquivo inexiste
 			File filesInput = new File(filePath);
 			String[] files = filesInput.list();
 			for (String file : files) {

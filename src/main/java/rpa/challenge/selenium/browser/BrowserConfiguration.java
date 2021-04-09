@@ -34,7 +34,7 @@ public class BrowserConfiguration {
 		options.addArguments("--disable-extensions");
 		options.addArguments("--disable-gpu");
 		options.addArguments("--disable-infobars");
-		options.addArguments("--headless");
+		//options.addArguments("--headless");
 
 		options.setExperimentalOption("prefs", chromePreferences);
 		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);

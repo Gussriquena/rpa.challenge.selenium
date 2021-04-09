@@ -18,6 +18,21 @@ public class ChallengePageJs {
 	public ChallengePageJs(WebDriver driver) {
 		this.driver = driver;
 		this.js = (JavascriptExecutor) driver;
+		
+		/*
+		driver.findElement(By.xpath("//div/button")).click();
+		driver.findElement(By.xpath("//div/a")).click();
+		
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("document.querySelector('div > button').click()");
+		js.executeScript("document.querySelector('div > a').click()");
+		
+		
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.id("botaoOk")));*/
+		
 	}
 	
 	public void fillInputText(String inputName, String dataInput) throws Exception {

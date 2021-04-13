@@ -26,7 +26,14 @@ public class ChallengePageJs {
 	}
 	
 	public String getResultMessage() {
-		 return (String) js.executeScript("return document.querySelector('div.message2').innerText");
+		String message = "";
+		
+		try {
+			message = (String) js.executeScript("return document.querySelector('div.message2').innerText");
+		} catch(Exception e) {
+			message = "No results found";
+		}
+		 return message;
 	}
 	
 	public void fillPage(Person person) {

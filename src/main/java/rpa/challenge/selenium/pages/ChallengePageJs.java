@@ -3,6 +3,8 @@ package rpa.challenge.selenium.pages;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import rpa.challenge.selenium.model.Person;
+
 public class ChallengePageJs {
 	private JavascriptExecutor js;
 	
@@ -25,5 +27,19 @@ public class ChallengePageJs {
 	
 	public String getResultMessage() {
 		 return (String) js.executeScript("return document.querySelector('div.message2').innerText");
+	}
+	
+	public void fillPage(Person person) {
+		
+		String command  = "$('input[ng-reflect-name=labelFirstName]').val('" + person.getFirstName() + "');"
+        				+ "$('input[ng-reflect-name=labelLastName]').val('" + person.getLastName() + "');"
+        				+ "$('input[ng-reflect-name=labelCompanyName]').val('" + person.getCompanyName() + "');"
+        				+ "$('input[ng-reflect-name=labelRole]').val('" + person.getRoleInCompany() + "');"
+        				+ "$('input[ng-reflect-name=labelAddress]').val('" + person.getAddress() + "');"
+        				+ "$('input[ng-reflect-name=labelEmail]').val('" + person.getEmail() + "');"
+        				+ "$('input[ng-reflect-name=labelPhone]').val('" + person.getPhoneNumber() + "');"
+        				+ "$('.inputFields .uiColorButton').click();\n";
+		
+		 js.executeScript(command);
 	}
 }

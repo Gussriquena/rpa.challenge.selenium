@@ -55,17 +55,10 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-
-			challengePageJs.fillInputText("First Name", person.getFirstName());
-			challengePageJs.fillInputText("Last Name", person.getLastName());
-			challengePageJs.fillInputText("Role", person.getRoleInCompany());
-			challengePageJs.fillInputText("Company Name", person.getCompanyName());
-			challengePageJs.fillInputText("Address", person.getAddress());
-			challengePageJs.fillInputText("Email", person.getEmail());
-			challengePageJs.fillInputText("Phone", person.getPhoneNumber().toString());
-			challengePageJs.clickSubmitButton();
 			
+			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
+            challengePageJs.fillPage(person);
+            
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + e.getMessage()  + " - " + person.toString());
 			driver.get(PageEnum.URL_CHALLENGE.getValue());

@@ -26,27 +26,21 @@ public class ChallengePageJs {
 	}
 	
 	public String getResultMessage() {
-		String message = "";
-		
-		try {
-			message = (String) js.executeScript("return document.querySelector('div.message2').innerText");
-		} catch(Exception e) {
-			message = "No results found";
-		}
-		 return message;
+		return (String) js.executeScript("return document.querySelector('div.message2').innerText");
 	}
 	
 	public void fillPage(Person person) {
+		StringBuilder command = new StringBuilder();
 		
-		String command  = "$('input[ng-reflect-name=labelFirstName]').val('" + person.getFirstName() + "');"
-        				+ "$('input[ng-reflect-name=labelLastName]').val('" + person.getLastName() + "');"
-        				+ "$('input[ng-reflect-name=labelCompanyName]').val('" + person.getCompanyName() + "');"
-        				+ "$('input[ng-reflect-name=labelRole]').val('" + person.getRoleInCompany() + "');"
-        				+ "$('input[ng-reflect-name=labelAddress]').val('" + person.getAddress() + "');"
-        				+ "$('input[ng-reflect-name=labelEmail]').val('" + person.getEmail() + "');"
-        				+ "$('input[ng-reflect-name=labelPhone]').val('" + person.getPhoneNumber() + "');"
-        				+ "$('.inputFields .uiColorButton').click();\n";
+		command.append("$('input[ng-reflect-name=labelFirstName]').val('" + person.getFirstName() + "');");
+		command.append("$('input[ng-reflect-name=labelLastName]').val('" + person.getLastName() + "');");
+		command.append("$('input[ng-reflect-name=labelCompanyName]').val('" + person.getCompanyName() + "');");
+		command.append("$('input[ng-reflect-name=labelRole]').val('" + person.getRoleInCompany() + "');");
+		command.append("$('input[ng-reflect-name=labelAddress]').val('" + person.getAddress() + "');");
+		command.append("$('input[ng-reflect-name=labelEmail]').val('" + person.getEmail() + "');");
+		command.append("$('input[ng-reflect-name=labelPhone]').val('" + person.getPhoneNumber() + "');");
+		command.append("$('.inputFields .uiColorButton').click();\n");
 		
-		 js.executeScript(command);
+		js.executeScript(command.toString());
 	}
 }

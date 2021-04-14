@@ -42,9 +42,9 @@ public class ChallengeController {
 			for (Person person : personList) {
 				insertPersonData(person);
 			}
-
+			
 			resultMessage = challengePageJs.getResultMessage();
-			log.info(resultMessage);
+			log.debug(resultMessage);
 			WebDriverFactory.closeWebDriver();
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -55,10 +55,8 @@ public class ChallengeController {
 
 	private void insertPersonData(Person person) {
 		try {
-			
 			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
             challengePageJs.fillPage(person);
-            
 		} catch (Exception e) {
 			log.error("Was not possible insert data to person: " + e.getMessage()  + " - " + person.toString());
 			driver.get(PageEnum.URL_CHALLENGE.getValue());

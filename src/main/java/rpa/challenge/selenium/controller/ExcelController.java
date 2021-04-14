@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,9 +24,7 @@ public class ExcelController {
 	
 	private static Logger log = Logger.getLogger(ExcelController.class);
 	
-	// colocar no properties
 	private String outputFileName = PageEnum.NAME_EXCEL_FILE.getValue();
-	private String outputFilePath = PageEnum.PATH_EXCEL_OUTPUT.getValue() + outputFileName;
 	private String processingPath = PageEnum.PATH_EXCEL_PROCESSING.getValue() + outputFileName;
 	private String resultMessage;
 	
@@ -32,22 +32,16 @@ public class ExcelController {
 		log.info("Reading excel rows");
 		List<Person> personList = new ArrayList<>();
 		
-		File inputFile = new File(findExcel());
-		try (FileInputStream fileInputStream = new FileInputStream(inputFile)){
+		try (FileInputStream fileInputStream = new FileInputStream(new File(findExcel()))){
 			XSSFWorkbook fileWorkbook = new XSSFWorkbook(fileInputStream);
-			Sheet sheet = fileWorkbook.getSheetAt(0);
+			Iterator<Row> rowIterator = fileWorkbook.getSheetAt(0).iterator();
 			
-			Iterator<Row> rowIterator = sheet.iterator();
 			while(rowIterator.hasNext()) {
 				Person person = new Person();
 				Row row = rowIterator.next();
 				
 				String firstCell = row.getCell(0).getStringCellValue();
 				
-				// comparar estático primeiro
-				// "".equals(firstCell)
-				// se firstcell = null estoura exceção
-				// se comparar estático primeiro não estoura exception
 				if (!firstCell.equals("") && !firstCell.contains("First")) {
 					person.setFirstName(firstCell);
 					person.setLastName(row.getCell(1).getStringCellValue());
@@ -57,20 +51,18 @@ public class ExcelController {
 					person.setEmail(row.getCell(5).getStringCellValue());
 					person.setPhoneNumber(String.valueOf((long) row.getCell(6).getNumericCellValue()));
 
-					log.debug(person);
 					personList.add(person);
-				} else if(firstCell.equals("")) {
+				} else if("".equals(firstCell)) {
 					break;
 				}
 			}
 			
 			fileWorkbook.close();
-			
-			log.info("Rows loaded with success!");
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		
+		log.info("Rows loaded with success!");
 		return personList;
 	}
 	
@@ -102,6 +94,13 @@ public class ExcelController {
 			fileInputStream.close();
 			fileOutputStream.close();
 			
+			String outputFilePath 
+					= PageEnum.PATH_EXCEL_OUTPUT.getValue() 
+					+ PageEnum.NAME_EXCEL_FILE.getValue()
+					+ "_" 
+					+ new SimpleDateFormat("yyyy-MM-dd_HH-mm").format(new Date()) 
+					+ ".xlsx";
+			
 			Files.move(Paths.get(processingPath), Paths.get(outputFilePath), StandardCopyOption.REPLACE_EXISTING);
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -115,14 +114,11 @@ public class ExcelController {
 		try {
 			if (Files.exists(Paths.get(filePath))) {
 				new File(filePath).mkdirs();
-				new File(processingPath).mkdirs();
-				new File(outputFilePath).mkdirs();
+				new File(PageEnum.PATH_EXCEL_PROCESSING.getValue()).mkdirs();
+				new File(PageEnum.PATH_EXCEL_OUTPUT.getValue()).mkdirs();
 			}
 			
-			// verificar tratamento para arquivo inexiste
-			File filesInput = new File(filePath);
-			String[] files = filesInput.list();
-			for (String file : files) {
+			for (String file : new File(filePath).list()) {
 				if (file.contains(".xlsx")) {
 					filePath = filePath + file;
 					Files.move(Paths.get(filePath), Paths.get(processingPath), StandardCopyOption.REPLACE_EXISTING);

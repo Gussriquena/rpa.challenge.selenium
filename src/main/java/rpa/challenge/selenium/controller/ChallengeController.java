@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import rpa.challenge.selenium.browser.WebDriverFactory;
@@ -37,14 +38,14 @@ public class ChallengeController {
 			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			
 			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-			challengePageJs.clickStartButton();
-		
-			for (Person person : personList) {
-				insertPersonData(person);
-			}
+			
+			String fullCommand = createFullCommand();
+			
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript(fullCommand);
 			
 			resultMessage = challengePageJs.getResultMessage();
-			log.debug(resultMessage);
+			log.info(resultMessage);
 			WebDriverFactory.closeWebDriver();
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -52,14 +53,16 @@ public class ChallengeController {
 		
 		return resultMessage;
 	}
-
-	private void insertPersonData(Person person) {
-		try {
-			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-            challengePageJs.fillPage(person);
-		} catch (Exception e) {
-			log.error("Was not possible insert data to person: " + e.getMessage()  + " - " + person.toString());
-			driver.get(PageEnum.URL_CHALLENGE.getValue());
+	
+	private String createFullCommand() {
+		ChallengePageJs challengePageJs = new ChallengePageJs(driver);
+		StringBuilder fullCommand = new StringBuilder();
+		
+		fullCommand.append(challengePageJs.clickStartButton());
+		for (Person person : personList) {
+			fullCommand.append(challengePageJs.fillPageCommand(person));
 		}
+	
+		return fullCommand.toString();
 	}
 }

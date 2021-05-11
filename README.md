@@ -4,7 +4,7 @@ Java RPA with selenium webDriver to handle RPA Challenge, made with selenium bas
 This robot is actually configured to run in headless mode.
 To turn of this config, go to BrowserConfiguration, and comment 37 line
 
-Processing all registers in *229 milliseconds*
+Processing all registers in *100 milliseconds*
 
 ### Important note
 You will see that this project was created with too many classes and packages for your size

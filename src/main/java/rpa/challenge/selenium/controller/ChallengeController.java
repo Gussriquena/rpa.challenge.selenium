@@ -38,15 +38,15 @@ public class ChallengeController {
 			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			
 			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-			
 			String fullCommand = createFullCommand();
 			
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript(fullCommand);
 			
 			resultMessage = challengePageJs.getResultMessage();
-			log.info(resultMessage);
 			WebDriverFactory.closeWebDriver();
+			
+			log.info(resultMessage);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

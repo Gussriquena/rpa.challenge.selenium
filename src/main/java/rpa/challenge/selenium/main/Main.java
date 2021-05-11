@@ -10,7 +10,7 @@ public class Main {
 	private static Logger log = Logger.getLogger(Main.class);
 
 	public static void main(String[] args) {
-		PropertyConfigurator.configure("resources\\log4j.properties");
+		PropertyConfigurator.configure(PageEnum.CONFIG_LOG4J_PATH.getValue());
 		System.setProperty("webdriver.chrome.driver", PageEnum.PATH_CHROME_DRIVER.getValue());
 		
 		log.info("Starting RPA Challenge automation");

@@ -37,7 +37,7 @@ public class BrowserConfiguration {
 		//options.addArguments("--headless");
 
 		options.setExperimentalOption("prefs", chromePreferences);
-		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+		//options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 		
 		return options;
 	}

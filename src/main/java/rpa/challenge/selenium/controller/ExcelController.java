@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -49,7 +51,7 @@ public class ExcelController {
 					person.setRoleInCompany(row.getCell(3).getStringCellValue());
 					person.setAddress(row.getCell(4).getStringCellValue());
 					person.setEmail(row.getCell(5).getStringCellValue());
-					person.setPhoneNumber(String.valueOf((long) row.getCell(6).getNumericCellValue()));
+					person.setPhoneNumber(getConvertedCellData(row.getCell(6)));
 
 					personList.add(person);
 				} else if("".equals(firstCell)) {
@@ -107,6 +109,26 @@ public class ExcelController {
 		}
 		
 	}
+	
+	private String getConvertedCellData(Cell cell) {
+		String cellReturn = "";
+		
+		try {
+			if (cell != null) {
+				if (cell.getCellType().equals(CellType.NUMERIC)) {
+					cellReturn = String.valueOf((Double) cell.getNumericCellValue());
+				} else if(cell.getCellType().equals(CellType.STRING)) {
+					cellReturn = cell.getStringCellValue();
+				}
+			}
+			
+		} catch (Exception e) {
+			log.error("Was not possible to convert cell data " + e.getMessage());
+		}
+
+		return cellReturn.trim();
+	}
+
 	
 	private String findExcel() {
 		String filePath = PageEnum.PATH_EXCEL_INPUT.getValue();

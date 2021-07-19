@@ -16,10 +16,6 @@ public class ChallengePageJs {
 		return "$('div > button').click();";
 	}
 	
-	public String getResultMessage() {
-		return (String) js.executeScript("return document.querySelector('div.message2').innerText");
-	}
-	
 	public String fillPageCommand(Person person) {
 		StringBuilder command = new StringBuilder();
 		
@@ -34,4 +30,17 @@ public class ChallengePageJs {
 		
 		return command.toString();
 	}
+	
+	public String getResultMessage() {
+		return (String) js.executeScript("return document.querySelector('div.message2').innerText");
+	}
+	
+	public void runSingleJsCommand(String command) {
+		js.executeScript(command);
+	}
+	
+	public void jsNavigate(String url) {
+		js.executeScript("window.location.href = '"+url+"';");
+	}
+
 }

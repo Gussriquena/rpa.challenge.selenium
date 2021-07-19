@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		PropertyConfigurator.configure(PageEnum.CONFIG_LOG4J_PATH.getValue());
-
+		System.setProperty("webdriver.chrome.driver", "resources\\chromedriver.exe");
 		log.info("Starting RPA Challenge automation");
 		
 		ChallengeController challengeController = new ChallengeController();

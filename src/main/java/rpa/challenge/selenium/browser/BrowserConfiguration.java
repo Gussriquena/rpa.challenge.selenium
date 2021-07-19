@@ -2,7 +2,6 @@ package rpa.challenge.selenium.browser;
 
 import java.util.HashMap;
 
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class BrowserConfiguration {
@@ -10,7 +9,6 @@ public class BrowserConfiguration {
 	public static ChromeOptions getChromeOptios() throws Exception {
 		HashMap<String, Object> chromePreferences = new HashMap<String, Object>();
 		ChromeOptions options = new ChromeOptions();
-
 		// ChromePreferences 0 = default, 1 = allow, 2 = block
 		chromePreferences.put("profile.managed_default_content_settings.popups", 0);
 		chromePreferences.put("profile.managed_default_content_settings.notifications", 2);

@@ -1,6 +1,5 @@
 package rpa.challenge.selenium.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -16,53 +15,38 @@ public class ChallengeController {
 
 	private Logger log = Logger.getLogger(ChallengeController.class);
 	private WebDriver driver;
-	private List<Person> personList = new ArrayList<>();
 	
 	public void initFlow() {
 		ExcelController excelController = new ExcelController();
-		personList = excelController.readRowsExcel();
-
-		if (!personList.isEmpty()) {
+		excelController.readRowsExcel().ifPresentOrElse(personList -> {
 			excelController.setResultMessage(processData(personList));
 			excelController.writeOutputFile(personList);
-		} else {
-			log.info("No registers found to input");
-		}
+		}, () -> log.info("No registers found to input"));
 	}
 
 	private String processData(List<Person> personList) {
-		String resultMessage = "";
+		StringBuilder resultMessage = new StringBuilder();
 		
 		try {
 			driver = WebDriverFactory.getInstance();
 			driver.get(PageEnum.URL_CHALLENGE.getValue());
 			
 			ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-			String fullCommand = createFullCommand();
+			StringBuilder fullCommand = new StringBuilder();
+			
+			personList.forEach(person -> fullCommand.append(challengePageJs.fillPageCommand(person)));
 			
 			JavascriptExecutor js = (JavascriptExecutor) driver;
-			js.executeScript(fullCommand);
+			js.executeScript(challengePageJs.clickStartButton() + fullCommand.toString());
 			
-			resultMessage = challengePageJs.getResultMessage();
-			WebDriverFactory.closeWebDriver();
+			resultMessage.append(challengePageJs.getResultMessage());
+			//WebDriverFactory.closeWebDriver();
 			
 			log.info(resultMessage);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		
-		return resultMessage;
-	}
-	
-	private String createFullCommand() {
-		ChallengePageJs challengePageJs = new ChallengePageJs(driver);
-		StringBuilder fullCommand = new StringBuilder();
-		
-		fullCommand.append(challengePageJs.clickStartButton());
-		for (Person person : personList) {
-			fullCommand.append(challengePageJs.fillPageCommand(person));
-		}
-	
-		return fullCommand.toString();
+		return resultMessage.toString();
 	}
 }
